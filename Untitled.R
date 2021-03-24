@@ -1,16 +1,21 @@
-
+library(tidyverse);library(glue)
 movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv')
 
-movies<- movies%>% mutate(decade=case_when(year<1975~"1970-1974",
-                                           year>=1975&year<1980~"1974-1979",
-                                           year>=1980&year<1985~"1980-1984",
-                                           year>=1985&year<1990~"1985-1989",
-                                           year>=1990&year<1995~"1990-1994",
-                                           year>=1995&year<2000~"1995-1999",
-                                           year>=2000&year<2005~"2000-2004",
-                                           year>=2005&year<2010~"2005-2009",
-                                           year>=2010~"+2010"))
+movies<- movies%>% mutate(decade= case_when(year<1975~ "1970-1974",
+                                            year>=1975&year<1980~ "1975-1979",
+                                            year>=1980&year<1985~"1980-1984",
+                                            year>=1985&year<1990~"1985-1989",
+                                            year>=1990&year<1995~ "1990-1994",
+                                            year>=1995&year<2000~ "1995-1999",
+                                            year>=2000&year<2005~ "2000-2004",
+                                            year>=2005&year<2010~ "2005-2009",
+                                            year>=2010&year<2015~ "+2010"))
 data2<-movies%>% count(decade,binary)
+data2$decade<-ordered(data2$decade,
+                      levels=c("1970-1974","1975-1979","1980-1984"
+                               ,"1985-1989","1990-1994","1995-1999",
+                               "2000-2004","2005-2009","+2010"))
+
 
 ggplot(data2)+
   geom_point(aes(x=decade,y=n,colour=binary),size=5,alpha=0.85)+theme_minimal()+
@@ -29,4 +34,9 @@ geom_segment(aes(x=decade, xend=decade, y=0, yend=n,colour=binary,lty=binary),al
         plot.subtitle  = element_markdown(colour="white"), 
         legend.position = "none",axis.title.x  = element_blank(),
         plot.margin = margin(1,1,1,1,"cm"))
+library("tidyverse");library("glue")
+
+
+
+
 
