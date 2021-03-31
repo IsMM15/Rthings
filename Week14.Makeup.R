@@ -20,7 +20,7 @@ dataFilteres<- allNumbers%>% filter(brand=="Dior"|
 #Plot
 ggplot(data=dataFilteres,aes(y=brand,x=lightness))+
   geom_density_ridges(scale = 0.75,fill="darkslategray",colour="darkslategray4")+xlim(0:1)+
-  annotate("point",x=dataFilteres$lightness,y=dataFilteres$brand,color=dataFilteres$hex,size=3)+
+  annotate("point",x=dataFilteres$lightness,y=dataFilteres$brand,color=dataFilteres$hex,size=2)+
   theme_minimal()+ggtitle("THE BEAUTY BIAS")+labs(subtitle="Shown here, foundation shades of several popular makeup brands.\n Lightness is represented in the scale of 0 (black) to 1 (white).\n\n",
                                                   caption="TidyTuesday Week 14 | Data Source:The Pudding | March 2021")+
   theme(plot.background = element_rect(fill="#F1EAE3"),panel.grid.major.x = element_blank(),
