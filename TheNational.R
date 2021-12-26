@@ -1,6 +1,5 @@
 #The National - Sept 2021 // Modified Dec 2021
 library(tidytext);library(glue);library(ggtext);library(tidyverse);library(viridis)
-
 ## PLOT 1: Most frecuent words across all songs.
 load("/Users/isabelmontejano/Desktop/TEC/R/The_National.Rdata") #Importar el dataset
 token<-The_National %>% unnest_tokens(word,lyric) #separar por palabras
