@@ -1,4 +1,4 @@
-#TidyTuesday - Week8| Feb 2021
+#Feb 2021// TidyTuesday Week8 // W.E.B. Du Bois Challenge
 library(tidyverse)
 #------
 #Data
