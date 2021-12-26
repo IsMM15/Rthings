@@ -1,6 +1,7 @@
-#TidyTuesday Week 14 - March 2021
+#March 2021 // TidyTuesday Week 14 // Makeup shades
 library(tidyverse); library(ggridges);library(extrafont);library(extrafontdb)
 
+#March 2021 // Tidy Tuesday 2021 // Makeup shades
 #Load original data
 allNumbers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-30/allNumbers.csv')
 

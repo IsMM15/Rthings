@@ -1,3 +1,4 @@
+#March 2021// Tidy Tuesday week 11 // Bechdel test
 library(tidyverse);library(glue)
 movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv')
 

@@ -1,5 +1,6 @@
-library(tidyverse);library(viridis);library(patchwork);library(extrafont)
+# Jan 2021 // Tidy Tuesday week 4 // Kenya Census
 
+library(tidyverse);library(viridis);library(patchwork);library(extrafont)
 #--------
 #load & filter data
 crops <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-01-19/crops.csv')
