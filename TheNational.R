@@ -1,20 +1,19 @@
 #The National - Sept 2021 // Modified Dec 2021
 library(tidytext);library(tidytext);library(glue);library(ggtext);library(tidyverse);library(viridis)
 
+## PLOT 1: Most frecuent words across all songs.
 load("/Users/isabelmontejano/Desktop/TEC/R/The_National.Rdata") #Importar el dataset
 token<-The_National %>% unnest_tokens(word,lyric) #separar por palabras
 token<- token %>% count(word)#Sacar las más frecuentes
 token<-token %>% anti_join(stop_words) #quitar stoppers
-
-#filtrar   
+#Filter (to do this we must check the data first)   
 tokencount<-token      
 tokencount<-tokencount[tokencount$n>=28,]
 tokencount<-tokencount[-9,]
 tokencount<-tokencount[-19,]
 tokencount<-tokencount[-10,]
 tokencount<-tokencount[1:25,]
-
-vect<-c(1:25)#Esto es para que funcione el geom_area- agrega una columna de números 
+vect<-c(1:25)#To make the geom area work (we need this vector to be joined to the final dataset to plot in order to mark the x position)
 cbind(tokencount,vect)
 newtokencount<-cbind(tokencount,vect)
 
@@ -34,8 +33,8 @@ ggplot(newtokencount)+ geom_area(aes(x=vect,y=(sqrt(n))),fill="white",alpha=0.05
                      plot.subtitle = element_markdown(color="white",face="bold",size=15,hjust=0.2),
                      plot.caption = element_markdown(color="white",size=10,hjust=0.2,vjust=0.7,face="bold"),
                      legend.position = "none",plot.margin = margin(1,1,1,1,"cm"))
- 
-#-------
+#------ 
+### PLOT 2: Songs with the highest use od the words love and leave (1 and 2 most frecuent in plot 1)
 token2<-The_National %>% unnest_tokens(word,lyric)
 token2<-token2[,3:5]
 token2<-token2[,-2]
