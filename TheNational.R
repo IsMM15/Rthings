@@ -1,12 +1,13 @@
-#The National - Sept 2021
-library(tidytext):library(tidytext);library(glue);library(ggtext)
-load("/Users/isabelmontejano/Desktop/TEC/R/TN.Rdata") #Importar el dataset
-token<-TheNational %>% unnest_tokens(word,lyric) #separar por palabras
+#The National - Sept 2021 // Modified Dec 2021
+library(tidytext);library(tidytext);library(glue);library(ggtext);library(tidyverse);library(viridis)
+
+load("/Users/isabelmontejano/Desktop/TEC/R/The_National.Rdata") #Importar el dataset
+token<-The_National %>% unnest_tokens(word,lyric) #separar por palabras
 token<- token %>% count(word)#Sacar las más frecuentes
 token<-token %>% anti_join(stop_words) #quitar stoppers
 
 #filtrar   
-tokencount<-token %>% count(word)      
+tokencount<-token      
 tokencount<-tokencount[tokencount$n>=28,]
 tokencount<-tokencount[-9,]
 tokencount<-tokencount[-19,]
@@ -35,11 +36,34 @@ ggplot(newtokencount)+ geom_area(aes(x=vect,y=(sqrt(n))),fill="white",alpha=0.05
                      legend.position = "none",plot.margin = margin(1,1,1,1,"cm"))
  
 #-------
-token<-token[token$n>=20,]
+token2<-The_National %>% unnest_tokens(word,lyric)
+token2<-token2[,3:5]
+token2<-token2[,-2]
+token2<- token2 %>% count(track_title,word)
 
-pairwise<- token%>% pairwise_cor(track_title,word,sort=TRUE)
+love<- token2[which(token2$word=="love"),]
+love<-love[order(love$n),]
+lovesel<-love[28:34,]
 
-set.seed(12)
-pairwise%>% filter(correlation>.13)%>% graph_from_data_frame()%>% ggraph()+
-  geom_edge_link(show.legend = FALSE,aes(edge_alpha=correlation,linemitre=5)) +
-  geom_node_point(color="cadetblue",size=5,alpha=0.5)+geom_node_text(aes(label=name,size=5),repel=TRUE)+ theme_void()
+leave<- token2[which(token2$word=="leave"),]
+leave<-leave[order(leave$n,decreasing = TRUE),]
+leavesel<-leave[1:6,]
+
+words<-rbind(lovesel,leavesel)
+words<-words[-12,]
+
+col=c("cadetblue","mediumorchid4")
+
+set.seed(1)
+
+ggplot(words) + geom_point(aes(x=track_title,y=sqrt(n)+runif(n=1,min=0,max=0.5),color= word,size=sqrt(n)),alpha=0.45) + ylim(0,7.5)+
+  annotate(geom="text",x=words$track_title,y=sqrt(words$n)-0.38,label=words$track_title,color="white",size=3,fontface="bold")+
+  scale_size_continuous(range = c(10, 25)) + theme_minimal()+ scale_color_manual(values=col)+ 
+  ggtitle("About Love and Loss", subtitle = glue("<span style = 'color:#6781C6'>**The National**</span> songs with highest use of the words 
+                                                 <span style = 'color:mediumorchid3'>**love**</span> and <span style = 'color:cadetblue'>**leave**</span>"))+
+  labs(caption="<span style = 'color:#6781C6'>**Note:**</span> The circle size and its height are proportional to the frequency of each word.  The range goes from 30 repetitions to 4") +
+  theme_void()+theme(plot.background = element_rect(fill="black"),
+                     plot.title = element_text(color="white",face="bold",size=45,hjust=0.2),
+                     plot.subtitle = element_markdown(color="white",face="bold",size=15,hjust=0.2),
+                     plot.caption = element_markdown(color="white",size=10,hjust=0.2,vjust=0.7,face="bold"),
+                     legend.position = "none",plot.margin = margin(1,1,1,1,"cm"))
