@@ -30,4 +30,29 @@ ggplot(BC)+geom_col(aes(x=trait,y=rate,fill=rate))+ ggtitle("Border Collies",
     plot.caption = element_text(color="gray21",size=6),
     axis.text.x = element_text(size=5,face="bold"),
     plot.margin = margin(1,1,1,1,"cm"),legend.title = element_blank())
+
+##Raradar plor done under the same logic
+radar<-breed_traits[32,]
+radar<-radar[,-8]
+radar<-radar[,-8]
+radar<-radar[,-1]
+
+ggradar(radar,grid.max = 5,grid.min = 0,background.circle.colour="salmon",base.size = 4,plot.legend = FALSE,group.colours = "hotpink4",grid.label.size=0)+
+  ggtitle("Border Collies",subtitle = glue("Some of their traits rated in a scale from
+                                                                    <span style = 'color:#404040'>**1 - low**</span>  to  <span style = 'color:#b8627db2'>**5 - high**</span> "))+
+  labs(caption="\n #TidyTuesday week 5 || Data source: American Kennel Club|| Git: @isMM15")+
+  theme(
+    plot.background = element_rect(fill="antiquewhite"),
+    axis.text.y = element_blank(),
+    axis.title = element_blank(),
+    plot.title = element_text(face="bold",color="hotpink4",size=35),
+    plot.subtitle = element_markdown(color="darkslategray",size=15),
+    plot.caption = element_text(color="gray21",size=6),
+    axis.text.x = element_text(size=5,face="bold"),
+    plot.margin = margin(1,1,1,1,"cm"),legend.title = element_blank(),
+    panel.background = element_rect(fill="antiquewhite"))
+
+
+
+
   
